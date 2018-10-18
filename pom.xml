@@ -14,6 +14,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kumuluzee.version>3.0.0</kumuluzee.version>
+        <pgsql.version>42.2.5</pgsql.version>
         <!-- versions of this project's modules -->
         <api.version>0.1-SNAPSHOT</api.version>
         <entities.version>0.1-SNAPSHOT</entities.version>
@@ -40,41 +41,43 @@
                 <artifactId>kumuluzee-servlet-jetty</artifactId>
                 <version>${kumuluzee.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jpa-eclipselink</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jta-narayana</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-cdi-weld</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${pgsql.version}</version>
+            </dependency>
             <!-- module dependencies -->
             <dependency>
-                <groupId>si.fri.rso9.catalogManagement</groupId>
+                <groupId>si.fri.rso9</groupId>
                 <artifactId>api</artifactId>
                 <version>${api.version}</version>
             </dependency>
             <dependency>
-                <groupId>si.fri.rso9.catalogManagement</groupId>
+                <groupId>si.fri.rso9</groupId>
                 <artifactId>entities</artifactId>
                 <version>${entities.version}</version>
             </dependency>
             <dependency>
-                <groupId>si.fri.rso9.catalogManagement</groupId>
+                <groupId>si.fri.rso9</groupId>
                 <artifactId>services</artifactId>
                 <version>${services.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-maven-plugin</artifactId>
-                <version>${kumuluzee.version}</version>
-                <executions>
-                    <execution>
-                        <id>package</id>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
