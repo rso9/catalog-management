@@ -16,8 +16,6 @@ public class ArtistBean {
 
     public List<Artist> getArtists() {
         TypedQuery<Artist> query = entityManager.createNamedQuery("Artist.getAll", Artist.class);
-        List<Artist> result = query.getResultList();
-
-        return result;
+        return query.getResultList();
     }
 }
