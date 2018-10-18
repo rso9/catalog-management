@@ -1,0 +1,1 @@
+INSERT INTO artist (artistName) VALUES ('Milan Kucan');
