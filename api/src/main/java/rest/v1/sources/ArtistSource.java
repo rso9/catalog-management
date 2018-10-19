@@ -2,6 +2,10 @@ package rest.v1.sources;
 
 import beans.ArtistBean;
 import core.Artist;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -22,6 +26,22 @@ public class ArtistSource {
     @Inject
     private ArtistBean artistBean;
 
+    @Operation(
+            description = "Pridobivanje vseh uporabnikov",
+            tags = "uporabnik",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Artists",
+                            content = @Content(schema = @Schema(implementation = Artist.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No artists in the catalog",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )
+            }
+    )
     @GET
     public Response getAllArtists() {
         List<Artist> artists = artistBean.getArtists();

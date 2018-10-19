@@ -17,8 +17,11 @@ You will likely need to allow the IDE to import these dependencies (some kind of
 *If you are running Docker inside a VM, you might need to change the database IP in* `config.yaml`.
 6. Run the configuration.
 
-Open up `localhost:8080/servlet` in your browser. You should see the text "IT WORKS!" on a plain "website".  
+Open up [localhost:8080/servlet](localhost:8080/servlet) in your browser. You should see the text "IT WORKS!" on a plain "website".  
 To test the REST API, send a GET request to `localhost:8080/v1/artist`.
 
 ## Documentation
-**TODO: set up OpenAPI3**
+The project uses OpenAPI3 (KumuluzEE OpenAPI3).
+
+The documentation is available at [http://localhost:8080/api-specs/ui/](http://localhost:8080/api-specs/ui/).  
+The "raw" version can be accessed at [localhost:8080/api-specs/v1/openapi.json](localhost:8080/api-specs/v1/openapi.json).

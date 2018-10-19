@@ -22,12 +22,20 @@
             <artifactId>kumuluzee-servlet-jetty</artifactId>
         </dependency>
         <dependency>
-            <groupId>si.fri.rso9</groupId>
-            <artifactId>services</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.openapi</groupId>
+            <artifactId>kumuluzee-openapi-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>si.fri.rso9</groupId>
+            <artifactId>services</artifactId>
         </dependency>
     </dependencies>
 
@@ -45,6 +53,8 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                </configuration>
             </plugin>
         </plugins>
     </build>

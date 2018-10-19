@@ -14,6 +14,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kumuluzee.version>3.0.0</kumuluzee.version>
+        <kumuluzee-openapi.version>1.0.0</kumuluzee-openapi.version>
         <pgsql.version>42.2.5</pgsql.version>
         <!-- versions of this project's modules -->
         <api.version>0.1-SNAPSHOT</api.version>
@@ -60,6 +61,16 @@
                 <groupId>com.kumuluz.ee</groupId>
                 <artifactId>kumuluzee-jax-rs-jersey</artifactId>
                 <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.openapi</groupId>
+                <artifactId>kumuluzee-openapi</artifactId>
+                <version>${kumuluzee-openapi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.openapi</groupId>
+                <artifactId>kumuluzee-openapi-ui</artifactId>
+                <version>${kumuluzee-openapi.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
