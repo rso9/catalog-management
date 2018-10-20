@@ -4,6 +4,7 @@ import core.Artist;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -17,5 +18,9 @@ public class ArtistBean {
     public List<Artist> getArtists() {
         TypedQuery<Artist> query = entityManager.createNamedQuery("Artist.getAll", Artist.class);
         return query.getResultList();
+    }
+
+    public Artist getArtist(int id) {
+        return entityManager.find(Artist.class, id);
     }
 }

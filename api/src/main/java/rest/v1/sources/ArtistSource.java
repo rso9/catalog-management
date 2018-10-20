@@ -9,10 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -27,7 +24,7 @@ public class ArtistSource {
     private ArtistBean artistBean;
 
     @Operation(
-            description = "Pridobivanje vseh uporabnikov",
+            description = "Pridobivanje vseh izvajalcev",
             tags = "uporabnik",
             responses = {
                     @ApiResponse(
@@ -48,5 +45,28 @@ public class ArtistSource {
 
         return artists == null? Response.status(Response.Status.NOT_FOUND).build():
                 Response.status(Response.Status.OK).entity(artists).build();
+    }
+
+    @Operation(
+            description = "Pridobivanje enega izvajalca",
+            tags = "uporabnik",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Artist",
+                            content = @Content(schema = @Schema(implementation = Artist.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No artist with ID in the catalog",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )
+            }
+    )
+    @Path("{id}")
+    @GET
+    public Response getArtistById(@PathParam("id") int id) {
+        Artist artist = artistBean.getArtist(id);
+        return artist == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(artist).build();
     }
 }

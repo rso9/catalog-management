@@ -4,6 +4,10 @@
         <jta-data-source>jdbc/catalogDS</jta-data-source>
 
         <class>core.Artist</class>
+        <class>core.Album</class>
+        <class>core.Song</class>
+        <class>core.Playlist</class>
+        <class>core.SongRating</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
