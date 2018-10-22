@@ -69,12 +69,10 @@ public class Artist implements Serializable {
 
     public void addAlbum(Album album) {
         this.albums.add(album);
-        album.getArtists().add(this);
     }
 
     public void removeAlbum(Album album) {
         this.albums.remove(album);
-        album.getArtists().remove(this);
     }
 
 }
