@@ -16,6 +16,7 @@
         <kumuluzee.version>3.0.0</kumuluzee.version>
         <kumuluzee-openapi.version>1.0.0</kumuluzee-openapi.version>
         <pgsql.version>42.2.5</pgsql.version>
+        <jackson-annotations.version>2.9.7</jackson-annotations.version>
         <!-- versions of this project's modules -->
         <api.version>0.1-SNAPSHOT</api.version>
         <entities.version>0.1-SNAPSHOT</entities.version>
@@ -77,6 +78,12 @@
                 <artifactId>postgresql</artifactId>
                 <version>${pgsql.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson-annotations.version}</version>
+            </dependency>
+
             <!-- module dependencies -->
             <dependency>
                 <groupId>si.fri.rso9</groupId>

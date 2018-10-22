@@ -1,5 +1,8 @@
 package core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,9 +29,11 @@ public class Album implements Serializable {
             joinColumns = @JoinColumn(name = "album_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
+    @JsonIgnore
     private List<Song> songs = new ArrayList<>();
 
     @ManyToMany(mappedBy = "albums")
+    @JsonIgnore
     private List<Artist> artists = new ArrayList<>();
 
     public Integer getId() {
