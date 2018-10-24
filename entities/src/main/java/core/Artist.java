@@ -1,7 +1,6 @@
 package core;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,14 +10,20 @@ import java.util.List;
 @Entity(name = "artist")
 @NamedQueries(
         value = {
-                @NamedQuery(name = "Artist.getAll", query = "SELECT a from artist a")
+                @NamedQuery(name = "Artist.getAll", query = "SELECT a FROM artist a")
         }
 )
 public class Artist implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
     private String name;
+
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -80,4 +85,27 @@ public class Artist implements Serializable {
         this.albums.remove(album);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 }

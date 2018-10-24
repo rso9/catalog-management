@@ -36,5 +36,4 @@ public class ArtistAlbumBean {
             return false;
         }
     }
-
 }
