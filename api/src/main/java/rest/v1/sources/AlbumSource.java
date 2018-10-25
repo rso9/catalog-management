@@ -5,7 +5,10 @@ import beans.ArtistAlbumBean;
 import core.Album;
 import core.Artist;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,7 +27,21 @@ public class AlbumSource {
     @Inject
     private AlbumBean albumBean;
 
-    // TODO: docs
+    @Operation(
+            description = "Get an album by ID",
+            tags = "album",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Artist",
+                            content = @Content(schema = @Schema(implementation = Artist.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "No artist with ID in the catalog",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
     @Path("{id}")
     @GET
     public Response getAlbumById(@PathParam("id") int idAlbum) {
