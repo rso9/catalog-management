@@ -28,7 +28,7 @@ public class Playlist implements Serializable {
             joinColumns = @JoinColumn(name = "playlist_id"),
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
-    @JsonIgnore
+    @JsonIgnoreProperties("playlists")
     private List<Song> songs = new ArrayList<>();
 
     // TODO: add owners and followers

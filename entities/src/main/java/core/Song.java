@@ -23,15 +23,15 @@ public class Song implements Serializable {
     private Integer listens;
 
     @ManyToMany(mappedBy = "songs")
-    @JsonIgnore
+    @JsonIgnoreProperties("songs")
     private List<Album> albums = new ArrayList<>();
 
     @ManyToMany(mappedBy = "songs")
-    @JsonIgnore
+    @JsonIgnoreProperties("songs")
     private List<Playlist> playlists = new ArrayList<>();
 
     @ManyToMany(mappedBy = "songs")
-    @JsonIgnore
+    @JsonIgnoreProperties("songs")
     private List<Artist> artists = new ArrayList<>();
 
     public Integer getId() {
