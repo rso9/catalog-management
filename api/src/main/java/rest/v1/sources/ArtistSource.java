@@ -7,6 +7,7 @@ import core.Artist;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -28,6 +29,7 @@ public class ArtistSource {
     private ArtistAlbumBean artistAlbumBean;
 
     @Operation(
+            summary = "Get all artists",
             description = "Get all artists",
             tags = "artist",
             responses = {
@@ -51,6 +53,7 @@ public class ArtistSource {
     }
 
     @Operation(
+            summary = "Get an artist by ID",
             description = "Get an artist by ID",
             tags = "artist",
             responses = {
@@ -70,5 +73,78 @@ public class ArtistSource {
     public Response getArtistById(@PathParam("id") int idArtist) {
         Artist artist = artistBean.getArtist(idArtist);
         return artist == null ? Response.status(Response.Status.NOT_FOUND).build(): Response.ok(artist).build();
+    }
+
+    @Operation(
+            summary = "Add a new artist",
+            description = "Add a new artist",
+            tags = "artist",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Artist",
+                            content = @Content(schema = @Schema(implementation = Artist.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Could not add artist to catalog",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
+    @POST
+    public Response addArtist(@RequestBody Artist artist) {
+        Artist newArtist = artistBean.addArtist(artist);
+
+        return newArtist == null? Response.status(Response.Status.BAD_REQUEST).build():
+                Response.status(Response.Status.OK).entity(newArtist).build();
+    }
+
+    @Operation(
+            summary = "Update an artist entity",
+            description = "Update an artist entity. If the artist does not exist, it is created. " +
+                    "The operation is idempotent",
+            tags = "artist",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Artist",
+                            content = @Content(schema = @Schema(implementation = Artist.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Updating the artist failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
+    @PUT
+    public Response addOrUpdateArtist(@RequestBody Artist artist) {
+        Artist newArtist = artistBean.updateArtist(artist);
+
+        return newArtist == null? Response.status(Response.Status.BAD_REQUEST).build():
+                Response.status(Response.Status.OK).entity(newArtist).build();
+    }
+
+    @Operation(
+            summary = "Delete an artist",
+            description = "Delete artist by ID",
+            tags = "artist",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully removed artist"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Removal of artist failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
+    @Path("{id}")
+    @DELETE
+    public Response deleteArtist(@PathParam("id") int idArtist) {
+        boolean status = artistBean.deleteArtist(idArtist);
+
+        return status? Response.status(Response.Status.OK).build():
+                Response.status(Response.Status.BAD_REQUEST).build();
     }
 }

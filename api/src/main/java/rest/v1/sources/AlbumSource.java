@@ -28,6 +28,7 @@ public class AlbumSource {
     private AlbumBean albumBean;
 
     @Operation(
+            summary = "Get an album by ID",
             description = "Get an album by ID",
             tags = "album",
             responses = {
@@ -50,11 +51,15 @@ public class AlbumSource {
                 Response.status(Response.Status.OK).entity(album).build();
     }
 
+    /*
+    * TODO:
+    * - decide whether this endpoint even makes sense
+    * (an alternative could be using PUT /album/ with an updated list of artists)
+    * - change what the function returns
+    * - document the responses
     @Operation(
             description = "Add artist to an existing album",
-            tags = {"album", "artist"}
-            // TODO: change what the function returns and document the responses
-            )
+            tags = "album")
     @Path("{id}/addArtist")
     @POST
     public Response addArtistToAlbum(@PathParam("id") int idAlbum, @RequestBody Artist artist) {
@@ -63,4 +68,5 @@ public class AlbumSource {
         return successAdd? Response.status(Response.Status.OK).build():
                 Response.status(Response.Status.BAD_REQUEST).build();
     }
+    */
 }
