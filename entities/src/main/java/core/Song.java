@@ -1,6 +1,5 @@
 package core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -19,8 +18,8 @@ public class Song implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Integer duration;
-    private Integer listens;
+    private Integer duration; // in seconds
+    private Integer listens = 0;
 
     @ManyToMany(mappedBy = "songs")
     @JsonIgnoreProperties("songs")
