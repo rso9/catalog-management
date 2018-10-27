@@ -40,13 +40,8 @@ public class ArtistBean {
         if(artist == null)
             return null;
 
-        Artist existingArtist = null;
-
-        Integer idArtist = artist.getId();
-        if(idArtist != null)
-            existingArtist = entityManager.find(Artist.class, idArtist);
-
-        return existingArtist == null? addArtist(artist): entityManager.merge(artist);
+        entityManager.merge(artist);
+        return artist;
     }
 
     @Transactional
