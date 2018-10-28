@@ -212,6 +212,21 @@ public class SongSource {
         return success ? Response.status(Response.Status.OK).entity(songRating).build() : Response.status(Response.Status.BAD_REQUEST).build();
     }
 
+    @Operation(
+            summary = "Delete a song's rating",
+            description = "Delete song rating by user ID",
+            tags = "rating",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully removed rating"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Removal of rating failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
     @Path("{id}/rate")
     @DELETE
     public Response deleteSongRating(@PathParam("id") int idSong, @RequestBody SongRating songRating) {
