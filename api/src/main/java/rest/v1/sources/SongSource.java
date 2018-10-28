@@ -2,6 +2,7 @@ package rest.v1.sources;
 
 import beans.SongBean;
 import core.Song;
+import core.SongRating;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -138,6 +139,89 @@ public class SongSource {
     public Response deleteSong(@PathParam("id") int idSong) {
         boolean status = songBean.deleteSong(idSong);
         return status? Response.status(Response.Status.OK).build():
+                Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @Operation(
+            summary = "Add a new song rating",
+            description = "Add a new song rating",
+            tags = "rating",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Song rating added",
+                            content = @Content(schema = @Schema(implementation = SongRating.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Could not add song rating to catalog",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
+    @Path("{id}/rate")
+    @POST
+    public Response addSongRating(@PathParam("id") int idSong, @RequestBody SongRating songRating) {
+        Song song = songBean.getSongById(idSong);
+        boolean newSongRating = song.getSongRatings().add(songRating);
+        songBean.updateSong(song);
+
+        return newSongRating ? Response.status(Response.Status.OK).entity(songRating).build()
+                : Response.status(Response.Status.BAD_REQUEST).build();
+
+    }
+
+    @Operation(
+            summary = "Update a song rating",
+            description = "Update a song rating. If the song rating does not exist, it is created. " +
+                    "The operation is idempotent",
+            tags = "rating",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Song",
+                            content = @Content(schema = @Schema(implementation = SongRating.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Updating the song failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
+    @Path("{id}/rate")
+    @PUT
+    public Response addOrUpdateSongRating(@PathParam("id") int idSong, @RequestBody SongRating songRating) {
+        Song song = songBean.getSongById(idSong);
+        List<SongRating> songRatings = song.getSongRatings();
+        boolean success = false;
+
+        // find if a song rating from current user exists
+        for (SongRating sr : songRatings) {
+            if (sr.getUserId() == songRating.getUserId()) {
+                sr.setRating(songRating.getRating());
+                song.setSongRatings(songRatings);
+                success = true;
+            }
+        }
+        // if it wasn't found, create it
+        if (!success) {
+            success = songRatings.add(songRating);
+        }
+
+        songBean.updateSong(song);
+
+        return success ? Response.status(Response.Status.OK).entity(songRating).build() : Response.status(Response.Status.BAD_REQUEST).build();
+    }
+
+    @Path("{id}/rate")
+    @DELETE
+    public Response deleteSongRating(@PathParam("id") int idSong, @RequestBody SongRating songRating) {
+        Song song = songBean.getSongById(idSong);
+        List<SongRating> songRatings = song.getSongRatings();
+
+        boolean success = songRatings.removeIf(sr -> sr.getUserId() == songRating.getUserId());
+        songBean.updateSong(song);
+
+        return success ? Response.status(Response.Status.OK).build():
                 Response.status(Response.Status.BAD_REQUEST).build();
     }
 }
