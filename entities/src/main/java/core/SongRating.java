@@ -14,7 +14,9 @@ public class SongRating implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // TODO: add logic
+    private Integer userId;
+
+    private Integer rating;
 
     public Integer getId() {
         return id;
@@ -24,4 +26,19 @@ public class SongRating implements Serializable {
         this.id = id;
     }
 
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
 }

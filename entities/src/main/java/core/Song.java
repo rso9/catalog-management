@@ -33,6 +33,12 @@ public class Song implements Serializable {
     @JsonIgnoreProperties("songs")
     private List<Artist> artists = new ArrayList<>();
 
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<SongRating> songRatings = new ArrayList<>();
+
     public Integer getId() {
         return id;
     }
@@ -90,4 +96,12 @@ public class Song implements Serializable {
     }
 
     public List<Playlist> getPlaylists() { return this.playlists; }
+
+    public List<SongRating> getSongRatings() {
+        return songRatings;
+    }
+
+    public void setSongRatings(List<SongRating> songRatings) {
+        this.songRatings = songRatings;
+    }
 }
