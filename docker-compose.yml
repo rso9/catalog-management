@@ -1,0 +1,19 @@
+version: "3"
+services:
+  catalog-management:
+    container_name: catalog-management
+    build: .
+    image: rso9/catalog-management:0.1
+    ports:
+    - "8080:8080"
+    depends_on:
+    - db
+  db:
+    container_name: catalog
+    image: postgres:latest
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=admin
+    - POSTGRES_DB=catalog
