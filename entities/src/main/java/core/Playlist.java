@@ -1,6 +1,5 @@
 package core;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -31,7 +30,8 @@ public class Playlist implements Serializable {
     @JsonIgnoreProperties("playlists")
     private List<Song> songs = new ArrayList<>();
 
-    // TODO: add owners and followers
+    private List<Integer> owners = new ArrayList<>();
+    private List<Integer> followers = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -59,5 +59,21 @@ public class Playlist implements Serializable {
     public void removeSong(Song song) {
         this.songs.remove(song);
         song.getPlaylists().remove(this);
+    }
+
+    public List<Integer> getOwners() {
+        return owners;
+    }
+
+    public void setOwners(List<Integer> owners) {
+        this.owners = owners;
+    }
+
+    public List<Integer> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<Integer> followers) {
+        this.followers = followers;
     }
 }
