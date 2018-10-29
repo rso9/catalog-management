@@ -1,0 +1,28 @@
+sudo: required
+
+services:
+  - docker
+
+language: java
+dist: trusty
+
+jdk:
+  - oraclejdk8
+  - openjdk8
+
+cache:
+  directories:
+  - $HOME/.m2
+
+env:
+  - DOCKER_IMAGE=rso9/catalog-management:0.1
+
+script:
+- mvn clean package -U
+- docker build -t "$DOCKER_IMAGE" .
+
+deploy:
+  provider: script
+  script: bash .travis/docker_push.sh
+  on:
+    branch: master
