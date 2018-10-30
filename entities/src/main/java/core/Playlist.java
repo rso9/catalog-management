@@ -30,10 +30,10 @@ public class Playlist implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     @JsonIgnoreProperties("playlists")
-    private Set<Song> songs = new HashSet<>(); // TODO: change to set
+    private Set<Song> songs = new HashSet<>();
 
-    private Set<Integer> owners = new HashSet<>(); // TODO: change to set
-    private Set<Integer> followers = new HashSet<>(); // TODO: change to set
+    private Set<Integer> owners = new HashSet<>();
+    private Set<Integer> followers = new HashSet<>();
 
     public Integer getId() {
         return id;
