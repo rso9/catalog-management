@@ -10,3 +10,4 @@ INSERT INTO playlist_song (playlist_id, song_id) VALUES (1, 2), (1, 3);
 ALTER SEQUENCE artist_id_seq RESTART WITH 100;
 ALTER SEQUENCE album_id_seq RESTART WITH 100;
 ALTER SEQUENCE song_id_seq RESTART WITH 100;
+ALTER SEQUENCE playlist_id_seq RESTART WITH 100;

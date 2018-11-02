@@ -43,13 +43,13 @@ public class PlaylistBean {
         if(playlist.getPlaylistName() != null)
             existingPlaylist.setPlaylistName(playlist.getPlaylistName());
 
-        if(playlist.getSongs().size() != 0)
+        if(!playlist.getSongs().isEmpty())
             existingPlaylist.setSongs(playlist.getSongs());
 
-        if(playlist.getFollowers().size() != 0)
+        if(!playlist.getFollowers().isEmpty())
             existingPlaylist.setFollowers(playlist.getFollowers());
 
-        if(playlist.getOwners().size() != 0)
+        if(!playlist.getOwners().isEmpty())
             existingPlaylist.setOwners(playlist.getOwners());
 
         entityManager.merge(existingPlaylist);
