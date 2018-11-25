@@ -5,7 +5,7 @@ kumuluzee:
     name: dev
   datasources:
   - jndi-name: jdbc/catalogDS
-    connection-url: jdbc:postgresql://db:5432/catalog
-    username: postgres
-    password: admin
+    connection-url: ${CONNECTION_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     max-pool-size: 20
