@@ -2,6 +2,7 @@ package rest.v1;
 
 import javax.ws.rs.ApplicationPath;
 
+import com.kumuluz.ee.discovery.annotations.RegisterService;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -15,5 +16,6 @@ import rest.v1.sources.*;
         contact = @Contact(name = "Joze", email = "joze@not-a-real-mail.com"),
         license = @License(name = "")))
 @ApplicationPath("v1")
+@RegisterService
 public class SourceFrame extends javax.ws.rs.core.Application {
 }

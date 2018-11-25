@@ -17,6 +17,8 @@
         <kumuluzee-openapi.version>1.0.0</kumuluzee-openapi.version>
         <pgsql.version>42.2.5</pgsql.version>
         <jackson-annotations.version>2.9.7</jackson-annotations.version>
+        <kumuluzee-config.version>1.1.0</kumuluzee-config.version>
+        <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
         <!-- versions of this project's modules -->
         <api.version>0.1-SNAPSHOT</api.version>
         <entities.version>0.1-SNAPSHOT</entities.version>
@@ -82,6 +84,16 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson-annotations.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>kumuluzee-config-etcd</artifactId>
+                <groupId>com.kumuluz.ee.config</groupId>
+                <version>${kumuluzee-config.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.discovery</groupId>
+                <artifactId>kumuluzee-discovery-etcd</artifactId>
+                <version>${kumuluzee-discovery.version}</version>
             </dependency>
 
             <!-- module dependencies -->
