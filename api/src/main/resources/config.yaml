@@ -18,3 +18,16 @@ kumuluzee:
       hosts: http://etcd:2379
     ttl: 20
     ping-interval: 15
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    logs:
+      enabled: true
+      level: INFO
+      period-s: 30
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/catalogDS
+      disk-space-health-check:
+        threshold: 100000000

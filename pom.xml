@@ -19,6 +19,7 @@
         <jackson-annotations.version>2.9.7</jackson-annotations.version>
         <kumuluzee-config.version>1.1.0</kumuluzee-config.version>
         <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
+        <kumuluz-health.version>1.0.1</kumuluz-health.version>
         <!-- versions of this project's modules -->
         <api.version>0.1-SNAPSHOT</api.version>
         <entities.version>0.1-SNAPSHOT</entities.version>
@@ -94,6 +95,11 @@
                 <groupId>com.kumuluz.ee.discovery</groupId>
                 <artifactId>kumuluzee-discovery-etcd</artifactId>
                 <version>${kumuluzee-discovery.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.health</groupId>
+                <artifactId>kumuluzee-health</artifactId>
+                <version>${kumuluz-health.version}</version>
             </dependency>
 
             <!-- module dependencies -->
