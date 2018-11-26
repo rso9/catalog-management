@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: catalog-management
-        image: rso9/catalog-management:0.1
+        image: rso9/catalog-management:0.2
         imagePullPolicy: IfNotPresent
         env:
         - name: CONNECTION_URL
