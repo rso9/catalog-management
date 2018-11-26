@@ -12,7 +12,7 @@ kumuluzee:
     connection-url: ${CONNECTION_URL}
     username: ${DB_USER}
     password: ${DB_PASS}
-    max-pool-size: 20
+    max-pool-size: 3
   discovery:
     etcd:
       hosts: http://etcd:2379
