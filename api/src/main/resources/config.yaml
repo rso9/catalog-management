@@ -12,12 +12,11 @@ kumuluzee:
     connection-url: ${CONNECTION_URL}
     username: ${DB_USER}
     password: ${DB_PASS}
-    max-pool-size: 3
     pool:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
-      max-size: 10
+      max-size: 3
   discovery:
     etcd:
       hosts: http://localhost:2379
