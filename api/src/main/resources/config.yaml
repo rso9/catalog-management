@@ -27,7 +27,5 @@ kumuluzee:
       level: INFO
       period-s: 30
     checks:
-      data-source-health-check:
-        jndi-name: jdbc/catalogDS
       disk-space-health-check:
         threshold: 100000000
