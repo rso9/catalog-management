@@ -15,7 +15,7 @@ kumuluzee:
     max-pool-size: 3
   discovery:
     etcd:
-      hosts: http://etcd:2379
+      hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
   health:

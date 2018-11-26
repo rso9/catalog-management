@@ -13,9 +13,13 @@ spec:
     spec:
       containers:
       - name: catalog-management
-        image: rso9/catalog-management:0.2
+        image: rso9/catalog-management:0.2.1
         imagePullPolicy: IfNotPresent
         env:
+        - name: KUMULUZEE_DISCOVERY_CLUSTER
+          value: rso9
+        - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+          value: http://etcd:2379
         - name: CONNECTION_URL
           valueFrom:
             secretKeyRef:
