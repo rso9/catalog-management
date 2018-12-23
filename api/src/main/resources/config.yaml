@@ -22,6 +22,27 @@ kumuluzee:
       hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
+  logs:
+    config-file: '<?xml version="1.0" encoding="UTF-8"?>
+                      <Configuration name="catalog-management">
+                          <Appenders>
+                              <Console name="console" target="SYSTEM_OUT">
+                                  <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+                              </Console>
+                              <!-- TODO: change host and port if (when) trial runs out -->
+                              <Socket name="logstash" host="50640222-d785-48fb-afbb-62a948d61574-ls.logit.io"
+                              port="13302" protocol="tcp">
+                                  <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
+                              </Socket>
+                          </Appenders>
+                          <Loggers>
+                              <!-- Log everything >= info level to console, everything >= trace to logstash -->
+                              <Root level="all">
+                                  <AppenderRef ref="console" level="info"/>
+                                  <AppenderRef ref="logstash" level="trace"/>
+                              </Root>
+                          </Loggers>
+                      </Configuration>'
   health:
     servlet:
       mapping: /health

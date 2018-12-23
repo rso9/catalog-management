@@ -2,13 +2,16 @@ package rest.v1.sources;
 
 import beans.ArtistAlbumBean;
 import beans.ArtistBean;
-import core.Album;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
+import com.kumuluz.ee.logs.cdi.Log;
 import core.Artist;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import rest.v1.interceptors.annotations.LogContext;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,11 +20,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+@Log
+@LogContext
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("artist")
 @ApplicationScoped
 public class ArtistSource {
+
+    private Logger logger = LogManager.getLogger(ArtistSource.class.getName());
 
     @Inject
     private ArtistBean artistBean;
@@ -47,6 +54,7 @@ public class ArtistSource {
     @GET
     public Response getAllArtists() {
         List<Artist> artists = artistBean.getArtists();
+        logger.info("Serving request to get all artists...");
 
         return artists == null? Response.status(Response.Status.NOT_FOUND).build():
                 Response.status(Response.Status.OK).entity(artists).build();
