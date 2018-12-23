@@ -10,7 +10,7 @@
         <class>core.SongRating</class>
 
         <properties>
-            <property name="javax.persistence.schema-generation.database.action" value="none"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="javax.persistence.sql-load-script-source" value="init-db.sql"/>
         </properties>
     </persistence-unit>
