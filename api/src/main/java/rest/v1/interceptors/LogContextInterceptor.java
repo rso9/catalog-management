@@ -4,8 +4,6 @@ import com.kumuluz.ee.common.runtime.EeRuntime;
 import com.kumuluz.ee.configuration.utils.ConfigurationUtil;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.apache.logging.log4j.CloseableThreadContext;
-import rest.v1.interceptors.annotations.LogContext;
-
 import javax.annotation.Priority;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
