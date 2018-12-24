@@ -111,4 +111,11 @@ public class Artist implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Artist(id=%s, name='%s')",
+                id != null? String.valueOf(id): "N/A",
+                name != null? name: "N/A");
+    }
 }

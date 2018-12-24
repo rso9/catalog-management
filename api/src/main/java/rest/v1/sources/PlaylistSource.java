@@ -1,6 +1,7 @@
 package rest.v1.sources;
 
 import beans.PlaylistBean;
+import com.kumuluz.ee.logs.cdi.Log;
 import core.Playlist;
 import core.User;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+@Log
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("playlist")

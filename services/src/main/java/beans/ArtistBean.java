@@ -26,7 +26,7 @@ public class ArtistBean {
 
     @Transactional
     public Artist addArtist(Artist artist) {
-        if(artist == null)
+        if(artist == null || artist.getName() == null)
             return null;
 
         entityManager.persist(artist);
@@ -37,7 +37,7 @@ public class ArtistBean {
         If such an instance does not exist, it is created. */
     @Transactional
     public Artist updateArtist(Artist artist) {
-        if(artist == null)
+        if(artist == null || artist.getName() == null)
             return null;
 
         entityManager.merge(artist);

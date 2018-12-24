@@ -2,6 +2,7 @@ package rest.v1.sources;
 
 import beans.AlbumBean;
 import beans.ArtistAlbumBean;
+import com.kumuluz.ee.logs.cdi.Log;
 import core.Album;
 import core.Artist;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+@Log
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("album")

@@ -52,7 +52,8 @@ public class ArtistSource {
     @GET
     public Response getAllArtists() {
         List<Artist> artists = artistBean.getArtists();
-        logger.info("Serving request to get all artists...");
+        logger.info(String.format("Request to get all artists produced %d results...",
+                artists == null? 0: artists.size()));
 
         return artists == null? Response.status(Response.Status.NOT_FOUND).build():
                 Response.status(Response.Status.OK).entity(artists).build();
@@ -78,6 +79,9 @@ public class ArtistSource {
     @GET
     public Response getArtistById(@PathParam("id") int idArtist) {
         Artist artist = artistBean.getArtist(idArtist);
+        logger.info(String.format("Request to get artist with id %d %s...",
+                idArtist, artist == null? "failed": "succeeded"));
+
         return artist == null ? Response.status(Response.Status.NOT_FOUND).build(): Response.ok(artist).build();
     }
 
@@ -100,6 +104,9 @@ public class ArtistSource {
     @POST
     public Response addArtist(@RequestBody Artist artist) {
         Artist newArtist = artistBean.addArtist(artist);
+        logger.info(String.format("Request to add %s %s...",
+                newArtist == null? "artist": newArtist.toString(),
+                newArtist == null? "failed": "succeeded"));
 
         return newArtist == null? Response.status(Response.Status.BAD_REQUEST).build():
                 Response.status(Response.Status.OK).entity(newArtist).build();
@@ -125,6 +132,9 @@ public class ArtistSource {
     @PUT
     public Response addOrUpdateArtist(@RequestBody Artist artist) {
         Artist newArtist = artistBean.updateArtist(artist);
+        logger.info(String.format("Request to update %s %s...",
+                newArtist == null? "artist": newArtist.toString(),
+                newArtist == null? "failed": "succeeded"));
 
         return newArtist == null? Response.status(Response.Status.BAD_REQUEST).build():
                 Response.status(Response.Status.OK).entity(newArtist).build();
@@ -149,6 +159,8 @@ public class ArtistSource {
     @DELETE
     public Response deleteArtist(@PathParam("id") int idArtist) {
         boolean status = artistBean.deleteArtist(idArtist);
+        logger.info(String.format("Request to delete artist with id %d %s...",
+                idArtist, status? "succeeded": "failed"));
 
         return status? Response.status(Response.Status.OK).build():
                 Response.status(Response.Status.BAD_REQUEST).build();
