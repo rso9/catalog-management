@@ -1,4 +1,5 @@
-# catalog-management
+# catalog-management [![Build Status](https://travis-ci.org/rso9/catalog-management.svg?branch=master)](https://travis-ci.org/rso9/catalog-management)
+
 Microservice for managing music streaming catalog.
 
 ## What is this?
