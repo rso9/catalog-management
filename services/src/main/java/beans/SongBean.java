@@ -29,7 +29,10 @@ public class SongBean {
         if(song == null)
             return null;
 
-        entityManager.persist(song);
+        // `merge` instead of `persist` so that the passed artists aren't created everytime
+        // a song gets inserted into db
+        entityManager.merge(song);
+        entityManager.flush();
         return song;
     }
 
