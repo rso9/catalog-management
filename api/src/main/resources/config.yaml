@@ -16,7 +16,7 @@ kumuluzee:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
-      max-size: 3
+      max-size: 2
   discovery:
     etcd:
       hosts: http://localhost:2379
@@ -52,5 +52,7 @@ kumuluzee:
       level: INFO
       period-s: 30
     checks:
+      data-source-health-check:
+        jndi-name: jdbc/catalogDS
       disk-space-health-check:
         threshold: 100000000
