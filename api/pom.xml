@@ -38,6 +38,10 @@
             <groupId>com.kumuluz.ee.logs</groupId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.cors</groupId>
+            <artifactId>kumuluzee-cors</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.rso9</groupId>
             <artifactId>services</artifactId>
         </dependency>
