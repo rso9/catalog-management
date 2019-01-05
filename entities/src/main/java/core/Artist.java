@@ -37,7 +37,7 @@ public class Artist implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "song_id")
     )
     @JsonIgnoreProperties("artists")
-    public List<Song> songs = new ArrayList<>();
+    private List<Song> songs = new ArrayList<>();
 
     @ManyToMany(cascade = {
             CascadeType.PERSIST,
@@ -48,7 +48,7 @@ public class Artist implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "album_id")
     )
     @JsonIgnoreProperties("artists")
-    public List<Album> albums = new ArrayList<>();
+    private List<Album> albums = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -56,14 +56,6 @@ public class Artist implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getArtistName() {
-        return name;
-    }
-
-    public void setArtistName(String artistName) {
-        this.name = artistName;
     }
 
     public List<Song> getSongs() { return this.songs; }
@@ -75,7 +67,9 @@ public class Artist implements Serializable {
 
     public void removeSong(Song song) {
         this.songs.remove(song);
-        song.getArtists().remove(song);
+        List<Artist> songArtists = song.getArtists();
+        for(Artist artist: songArtists)
+            artist.removeSong(song);
     }
 
     public List<Album> getAlbums() { return this.albums; }
