@@ -20,6 +20,7 @@ public class Song implements Serializable {
     private String name;
     private Integer duration; // in seconds
     private Integer listens = 0;
+    private String songUrl;
 
     @ManyToMany(mappedBy = "songs")
     @JsonIgnoreProperties("songs")
@@ -69,6 +70,14 @@ public class Song implements Serializable {
 
     public void setListens(Integer listens) {
         this.listens = listens;
+    }
+
+    public String getSongUrl() {
+        return songUrl;
+    }
+
+    public void setSongUrl(String songUrl) {
+        this.songUrl = songUrl;
     }
 
     public List<Album> getAlbums() { return this.albums; }
