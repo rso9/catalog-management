@@ -1,6 +1,8 @@
 package beans;
 
 import core.Artist;
+import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -15,11 +17,20 @@ public class ArtistBean {
     @PersistenceContext(unitName = "catalog-jpa")
     private EntityManager entityManager;
 
+    /*
+        @Timed measures the time required by this service to execute its body. Various statistics (mean, median, ...)
+        are calculated for execution time.
+    */
+    @Timed(name = "allArtistsRequests")
     public List<Artist> getArtists() {
         TypedQuery<Artist> query = entityManager.createNamedQuery("Artist.getAll", Artist.class);
         return query.getResultList();
     }
 
+    /*
+        @Metered measures the number of requests (rate of requests) sent to this service.
+     */
+    @Metered(name = "singleArtistRequests")
     public Artist getArtist(int id) {
         return entityManager.find(Artist.class, id);
     }

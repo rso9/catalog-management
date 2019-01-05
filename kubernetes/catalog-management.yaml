@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: catalog-management
-        image: rso9/catalog-management:0.2.3
+        image: rso9/catalog-management:0.2.4
         imagePullPolicy: IfNotPresent
         env:
         - name: KUMULUZEE_DISCOVERY_CLUSTER

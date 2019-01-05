@@ -22,6 +22,10 @@ kumuluzee:
       hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
+  metrics:
+    web-instrumentation:
+    - name: artist-endpoint
+      url-pattern: /v1/artist/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                       <Configuration name="catalog-management">
