@@ -37,6 +37,10 @@
             <artifactId>kumuluzee-metrics-core</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.fault.tolerance</groupId>
+            <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.rso9</groupId>
             <artifactId>entities</artifactId>
         </dependency>

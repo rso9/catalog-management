@@ -1,12 +1,16 @@
 package beans;
 
 import core.Song;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @ApplicationScoped
@@ -56,5 +60,21 @@ public class SongBean {
         } catch(Exception e) {
             return false;
         }
+    }
+
+    @CircuitBreaker(requestVolumeThreshold = 1, delay = 15000, failureRatio = 0.1)
+    @Fallback(fallbackMethod = "songFallback")
+    public Song songTestFaultTolerance(Integer idSong) throws Exception {
+        int i = (int)(Math.random() * 5) % 5;
+        if(i == 0)
+            throw new Exception("Unlucky");
+
+        return getSongById(idSong);
+    }
+
+    public Song songFallback(Integer idSong) {
+        Song defaultSong = new Song();
+        defaultSong.setSongName("Despacito");
+        return defaultSong;
     }
 }

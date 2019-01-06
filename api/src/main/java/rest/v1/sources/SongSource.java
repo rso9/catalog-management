@@ -241,4 +241,16 @@ public class SongSource {
         return success ? Response.status(Response.Status.OK).build():
                 Response.status(Response.Status.BAD_REQUEST).build();
     }
+
+    @Path("circuit-breaker/{idSong}")
+    @GET
+    public Response testCircuitBreaker(@PathParam("idSong") Integer idSong) {
+        try {
+            Song res = songBean.songTestFaultTolerance(idSong);
+            return Response.status(Response.Status.OK).entity(res).build();
+        }
+        catch (Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 }
