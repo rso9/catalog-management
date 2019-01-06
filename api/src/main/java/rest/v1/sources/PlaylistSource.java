@@ -1,6 +1,9 @@
 package rest.v1.sources;
 
 import beans.PlaylistBean;
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import core.Playlist;
 import core.User;
@@ -10,12 +13,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 @Log
 @Consumes(MediaType.APPLICATION_JSON)
@@ -24,8 +31,22 @@ import java.util.List;
 @ApplicationScoped
 public class PlaylistSource {
 
+    private Logger logger = LogManager.getLogger(ArtistSource.class.getName());
+
     @Inject
     private PlaylistBean playlistBean;
+
+    @Inject
+    @DiscoverService("auth")
+    private Optional<String> baseUrl;
+
+    private Client httpClient;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        logger.trace("Initialized new HTTP client");
+    }
 
     @Operation(
             summary = "Get all playlists",
@@ -93,6 +114,17 @@ public class PlaylistSource {
     @POST
     public Response addPlaylist(@RequestBody Playlist playlist) {
         Playlist newPlaylist = playlistBean.addPlaylist(playlist);
+
+        if(baseUrl.isPresent()) {
+            logger.info(String.format("Calling 'auth' service /dummy endpoint at url %s...",
+                    (baseUrl.get() + "dummy")));
+            logger.info(String.format("Got status code %d...",
+                    httpClient.target(baseUrl.get() + "dummy").request().get().getStatus()));
+        }
+        else {
+            logger.error("Could not get URL for 'auth' service. Perhaps etcd is not up?");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
 
         return newPlaylist == null? Response.status(Response.Status.BAD_REQUEST).build():
                 Response.status(Response.Status.OK).entity(newPlaylist).build();

@@ -2,6 +2,9 @@ package rest.v1.sources;
 
 import beans.AlbumBean;
 import beans.ArtistAlbumBean;
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import core.Album;
 import core.Artist;
@@ -11,12 +14,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 @Log
 @Consumes(MediaType.APPLICATION_JSON)
@@ -25,10 +32,24 @@ import java.util.List;
 @ApplicationScoped
 public class AlbumSource {
 
+    private Logger logger = LogManager.getLogger(ArtistSource.class.getName());
+
     @Inject
     private ArtistAlbumBean artistAlbumBean;
     @Inject
     private AlbumBean albumBean;
+
+    @Inject
+    @DiscoverService("auth")
+    private Optional<String> baseUrl;
+
+    private Client httpClient;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        logger.trace("Initialized new HTTP client");
+    }
 
     @Operation(
             summary = "Get all albums",
@@ -97,6 +118,17 @@ public class AlbumSource {
     @POST
     public Response addAlbum(@RequestBody Album album) {
         Album newAlbum = albumBean.addAlbum(album);
+
+        if(baseUrl.isPresent()) {
+            logger.info(String.format("Calling 'auth' service /dummy endpoint at url %s...",
+                    (baseUrl.get() + "dummy")));
+            logger.info(String.format("Got status code %d...",
+                    httpClient.target(baseUrl.get() + "dummy").request().get().getStatus()));
+        }
+        else {
+            logger.error("Could not get URL for 'auth' service. Perhaps etcd is not up?");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
 
         return newAlbum == null? Response.status(Response.Status.BAD_REQUEST).build():
                 Response.status(Response.Status.OK).entity(newAlbum).build();
