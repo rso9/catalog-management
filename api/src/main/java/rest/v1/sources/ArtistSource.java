@@ -2,6 +2,7 @@ package rest.v1.sources;
 
 import beans.ArtistAlbumBean;
 import beans.ArtistBean;
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
@@ -12,12 +13,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
 
 @Log
 @Consumes(MediaType.APPLICATION_JSON)
@@ -32,6 +37,18 @@ public class ArtistSource {
     private ArtistBean artistBean;
     @Inject
     private ArtistAlbumBean artistAlbumBean;
+
+    @Inject
+    @DiscoverService("auth")
+    private Optional<String> baseUrl;
+
+    private Client httpClient;
+
+    @PostConstruct
+    private void init() {
+        httpClient = ClientBuilder.newClient();
+        logger.trace("Initialized new HTTP client");
+    }
 
     @Operation(
             summary = "Get all artists",
@@ -107,6 +124,17 @@ public class ArtistSource {
         logger.info(String.format("Request to add %s %s...",
                 newArtist == null? "artist": newArtist.toString(),
                 newArtist == null? "failed": "succeeded"));
+
+        if(baseUrl.isPresent()) {
+            logger.info(String.format("Calling 'auth' service /dummy endpoint at url %s...",
+                    (baseUrl.get() + "dummy")));
+            logger.info(String.format("Got status code %d...",
+                    httpClient.target(baseUrl.get() + "dummy").request().get().getStatus()));
+        }
+        else {
+            logger.error("Could not get URL for 'auth' service. Perhaps etcd is not up?");
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
 
         return newArtist == null? Response.status(Response.Status.BAD_REQUEST).build():
                 Response.status(Response.Status.OK).entity(newArtist).build();
