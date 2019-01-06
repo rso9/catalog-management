@@ -19,7 +19,8 @@ kumuluzee:
       max-size: 2
   discovery:
     etcd:
-      hosts: http://localhost:2379
+      # NOTE: this needs to be set somewhere, otherwise service discovery won't work
+      hosts: ${KUMULUZEE_DISCOVERY_ETCD_HOSTS}
     ttl: 20
     ping-interval: 15
   metrics:
